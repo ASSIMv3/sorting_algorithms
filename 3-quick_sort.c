@@ -1,5 +1,4 @@
 #include "sort.h"
-#include <stddef.h>
 
 /**
  * quick_sort - Sorts an array of integers in ascending order using
