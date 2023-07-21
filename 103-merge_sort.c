@@ -35,7 +35,7 @@ void merge(int *array, int *left, size_t left_size, int *right,
  */
 void merge_sort(int *array, size_t size)
 {
-	size_t middle;
+	size_t middle, i;
 	int *temp_array;
 
 	if (size <= 1)
@@ -56,7 +56,7 @@ void merge_sort(int *array, size_t size)
 	printf("[right]: ");
 	print_array(array + middle, size - middle);
 
-	for (size_t i = 0; i < size; i++)
+	for (i = 0; i < size; i++)
 		temp_array[i] = array[i];
 
 	merge(array, temp_array, middle, temp_array + middle, size - middle);
