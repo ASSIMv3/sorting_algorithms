@@ -29,5 +29,7 @@ void quick_sort(int *array, size_t size);
 void shell_sort(int *array, size_t size);
 void swap_nodes(listint_t **list, listint_t *a, listint_t *b);
 void cocktail_sort_list(listint_t **list);
+int find_max(int *array, int size);
+void counting_sort(int *array, size_t size);
 
 #endif /* MAIN_H */
