@@ -30,7 +30,7 @@ void shell_sort(int *array, size_t size);
 void swap_nodes_forward(listint_t **list, listint_t **end,
 		listint_t **current);
 void swap_nodes_backward(listint_t **list, listint_t **end,
-		listint_t **current)
+		listint_t **current);
 void cocktail_sort_list(listint_t **list);
 int find_max(int *array, int size);
 void counting_sort(int *array, size_t size);
