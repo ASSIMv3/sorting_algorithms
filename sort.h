@@ -36,5 +36,8 @@ void merge(int *array, int *left, size_t left_size, int *right,
 void merge_sort(int *array, size_t size);
 void heap_sort(int *array, size_t size);
 void sift_down(int *array, size_t start, size_t end, size_t size);
+int get_max_digit(int *array, size_t size);
+void counting_sort_by_digit(int *array, size_t size, int exp);
+void radix_sort(int *array, size_t size);
 
 #endif /* MAIN_H */
