@@ -39,5 +39,11 @@ void sift_down(int *array, size_t start, size_t end, size_t size);
 int get_max_digit(int *array, size_t size);
 void counting_sort_by_digit(int *array, size_t size, int exp);
 void radix_sort(int *array, size_t size);
+void compare_swap(int *array, size_t i, size_t j, int dir);
+void bitonic_merge(int *array, size_t size, size_t low,
+		size_t cnt, int dir);
+void bitonic_sort_recursive(int *array, size_t size, size_t low,
+		size_t cnt, int dir);
+void bitonic_sort(int *array, size_t size);
 
 #endif /* MAIN_H */
