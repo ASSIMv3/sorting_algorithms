@@ -27,7 +27,10 @@ int lomuto_partition(int *array, size_t size, int low, int high);
 void quicksort(int *array, size_t size, int low, int high);
 void quick_sort(int *array, size_t size);
 void shell_sort(int *array, size_t size);
-void swap_nodes(listint_t **list, listint_t *a, listint_t *b);
+void swap_nodes_forward(listint_t **list, listint_t **end,
+		listint_t **current);
+void swap_nodes_backward(listint_t **list, listint_t **end,
+		listint_t **current);
 void cocktail_sort_list(listint_t **list);
 int find_max(int *array, int size);
 void counting_sort(int *array, size_t size);

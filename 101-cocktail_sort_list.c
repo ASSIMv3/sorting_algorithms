@@ -1,87 +1,104 @@
 #include "sort.h"
 
 /**
- * swap_nodes - Swaps two nodes in a doubly linked list.
+ * cocktail_sort_list - Sorts a doubly linked list
+ * using the Cocktail Shaker Sort algorithm
  *
- * @list: Pointer to a pointer to the first node of the list.
- * @a: First node to be swapped.
- * @b: Second node to be swapped.
+ * @list: Double pointer to the head of the doubly linked list
  *
- * Description: This function swaps two nodes in a doubly linked list.
- * It updates the links between the nodes to maintain the list structure.
- * The list pointer (list) may be updated if the swapped nodes were the first
- * and/or last nodes in the list.
- */
-void swap_nodes(listint_t **list, listint_t *a, listint_t *b)
-{
-	listint_t *prev_a = a->prev;
-	listint_t *prev_b = b->prev;
-	listint_t *next_b = b->next;
-
-	if (prev_a)
-		prev_a->next = b;
-	else
-		*list = b;
-
-	if (next_b)
-		next_b->prev = a;
-	a->next = next_b;
-
-	b->prev = prev_a;
-	b->next = a;
-
-	a->prev = b;
-	if (prev_b != a)
-		prev_b->next = a;
-}
-
-/**
- * cocktail_sort_list - Sorts a doubly linked list using the Cocktail
- * Shaker sort algorithm
- *
- * @list: Pointer to a pointer to the first node of the list.
+ * Return: void
  */
 void cocktail_sort_list(listint_t **list)
 {
-	int swapped;
-	listint_t *start = NULL, *end = NULL;
-	listint_t *current;
+	listint_t *end, *current;
+	int swapped = 0;
 
-	if (!list || !(*list) || (*list)->next == NULL)
+	if (!list || *list == NULL || (*list)->next == NULL)
 		return;
 
-	do {
-		swapped = 0;
-		current = start = *list;
+	for (end = *list; end->next != NULL;)
+		end = end->next;
 
-		while (current->next != end)
+	while (!swapped)
+	{
+		swapped = 1;
+		for (current = *list; current != end; current = current->next)
 		{
 			if (current->n > current->next->n)
 			{
-				swap_nodes(list, current, current->next);
-				print_list(*list);
-				swapped = 1;
+				swap_nodes_forward(list, &end, &current);
+				print_list((const listint_t *)*list);
+				swapped = 0;
 			}
-			else
-				current = current->next;
 		}
-		end = current;
-		if (!swapped)
-			break;
-		swapped = 0;
-		current = end;
-		while (current->prev != start)
+		for (current = current->prev; current != *list;
+				current = current->prev)
 		{
 			if (current->n < current->prev->n)
 			{
-				swap_nodes(list, current->prev, current);
-				print_list(*list);
-				swapped = 1;
+				swap_nodes_backward(list, &end, &current);
+				print_list((const listint_t *)*list);
+				swapped = 0;
 			}
-			else
-				current = current->prev;
 		}
-		start = current;
-	} while (swapped);
+	}
 }
 
+/**
+ * swap_nodes_forward - Swap two adjacent nodes in a doubly linked list
+ * in the forward direction
+ *
+ * @list: Double pointer to the head of the doubly linked list
+ * @end: Double pointer to the end of the doubly linked list
+ * @current: Double pointer to the current node
+ *
+ * Return: void
+ */
+void swap_nodes_forward(listint_t **list, listint_t **end, listint_t **current)
+{
+	listint_t *temp = (*current)->next;
+
+	if ((*current)->prev != NULL)
+		(*current)->prev->next = temp;
+	else
+		*list = temp;
+	temp->prev = (*current)->prev;
+	(*current)->next = temp->next;
+	if (temp->next != NULL)
+		temp->next->prev = *current;
+	else
+		*end = *current;
+	(*current)->prev = temp;
+	temp->next = *current;
+	*current = temp;
+}
+
+/**
+ * swap_nodes_backward - Swap two adjacent nodes in a doubly linked list
+ * in the backward direction
+ *
+ * @list: Double pointer to the head of the doubly linked list
+ * @end: Double pointer to the end of the doubly linked list
+ * @current: Double pointer to the current node
+ *
+ * Return: void
+ */
+void swap_nodes_backward(listint_t **list, listint_t **end,
+		listint_t **current)
+{
+	listint_t *temp = (*current)->prev;
+
+	if ((*current)->next != NULL)
+		(*current)->next->prev = temp;
+	else
+		*end = temp;
+	temp->next = (*current)->next;
+	(*current)->prev = temp->prev;
+	if (temp->prev != NULL)
+		temp->prev->next = *current;
+	else
+		*list = *current;
+	(*current)->next = temp;
+	temp->prev = *current;
+	*current = temp;
+}
